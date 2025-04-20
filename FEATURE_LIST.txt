@@ -1,0 +1,69 @@
+Projekt: Pump.fun Informations- & Community-Hub (Arbeitstitel: DegenRadar / PumpSignal o.ä.)
+
+Zielgruppe: Degens, Genz Trader, Memecoin Hunter auf Pump.fun (Solana)
+
+Kernphilosophie: Geschwindigkeit, Signal über Rauschen, Community-Vibe, Transparenz (im Degen-Style)
+
+---
+
+**Phase 1: MVP (Minimum Viable Product) & Basis-Funktionen**
+
+*   Technologie: Vercel (Hosting), Next.js (Framework), Solana Wallet Adapter, Vercel Postgres/Supabase (DB - Free Tier), Öffentliche/Kostenlose Solana RPCs (initial, mit Limits)
+*   Token: $HUB_V1 (Launch auf Pump.fun, Utility via Off-Chain Check des Token-Besitzes)
+*   Features:
+    *   Feed: Echtzeit-Liste neuer Pump.fun Tokens (sortier-/filterbar nach Startzeit, MCap).
+    *   Token-Detailseite: Grunddaten (Preis, MCap, Links zu Pump.fun/Explorer), einfacher Chart, Copy-Contract-Button.
+        *   **Chart (für gelistete Tokens): DexScreener iFrame Einbettung**
+            *   **Was:** Anzeige eines interaktiven DexScreener-Charts direkt in der App.
+            *   **Wie:** Mittels eines `iframe`-HTML-Elements, das auf eine spezielle DexScreener-Embed-URL verweist (z.B. `https://dexscreener.com/solana/<PAIR_ADDRESS>?embed=1&theme=dark`).
+            *   **Benötigte Daten:** Die **Paar-Adresse (Pair Address)** des Tokens von DexScreener (z.B. die Adresse des Haupt-Liquiditätspools auf Raydium, *nicht* die Token Contract Address). Diese muss pro Token ermittelt werden (z.B. über eine Mapping-Logik oder eine externe API).
+            *   **Anwendbarkeit:** Funktioniert **nur für Tokens, die bereits auf einer von DexScreener getrackten DEX (z.B. Raydium) gelistet sind**. Nicht für Tokens, die nur auf Pump.fun existieren.
+            *   **Vorteile:** Bietet reichhaltige, aktuelle Charts ohne Kosten für Charting-Bibliotheken oder History-Daten-APIs. Nutzt die Infrastruktur von DexScreener.
+            *   **Implementierung:** Erstellung einer wiederverwendbaren React-Komponente (wie im Beispiel gezeigt), die die `pairAddress` als Prop erhält und den `iframe` rendert. Sicherstellen, dass die `pairAddress` korrekt geladen wird, bevor die Komponente angezeigt wird.
+    *   Community-Hub: Token-spezifische Diskussionskanäle/Foren (einfache Textbeiträge).
+    *   Manuelle Info-Posts: Nutzer können wichtige Ereignisse (Raydium-Listing, Social Links etc.) manuell hinzufügen.
+    *   Wallet Integration: Wallet verbinden (Phantom, Solflare etc.).
+    *   Basis Rug Checker:
+        *   Mint Authority Status (Aktiv/Widerrufen - ✅/❌).
+        *   Freeze Authority Status (Aktiv/Widerrufen - ✅/❌).
+    *   Design: Dark Mode Pflicht, Degen-Ästhetik (Memes, passende Farben/Schriften), Fokus auf UI-Geschwindigkeit & Übersichtlichkeit.
+    *   Wichtige Disclaimer: Klare Risiko-Warnungen (NFA, DYOR).
+
+---
+
+**Phase 1+: Erweiterte & Premium-Features (Potenziell an $HUB_V1/V2-Besitz gekoppelt)**
+
+*   Technologie: Erfordert ggf. bezahlte Solana RPCs (Helius, QuickNode, Triton), potenziell Datenanbieter-APIs, robustere Backend-Logik.
+*   Features:
+    *   Erweiterter Rug Checker:
+        *   Anzeige der Deployer/Top Holder % (Supply Concentration - ⚠️).
+        *   LP-Analyse (gesperrt?, Halter) *nach* Raydium-Listing.
+        *   Automatisierter "Risk Score" (experimentell).
+    *   Trending Sektion: Algorithmisch ermittelte "heiße" Tokens.
+    *   Erweiterte Filter/Sortierung: Nach Preisänderungs-Geschwindigkeit ("Velocity"), Community-Sentiment etc.
+    *   On-Chain Intel Feed: Anzeige wichtiger Käufe/Verkäufe ("Whale Watching"), detailliertere Halter-Verteilung.
+    *   Watchlist: Persönliche Liste favorisierter Tokens.
+    *   Personalisierte Alerts: Benachrichtigungen (Push/In-App) für Watchlist-Events, Whale-Aktivitäten, Raydium-Listing-Nähe, neue DD-Posts etc.
+    *   Reputationssystem: Sichtbare Badges/Ränge für Community-Beiträge ("Chad Contributor", "Rug Spotter").
+    *   Werbefreiheit: Option für $HUB-Halter.
+    *   Pump.fun Portfolio Tracker: Aggregierte Ansicht der eigenen Trades & P/L auf Pump.fun.
+    *   "Road to Raydium" Tracker: Übersicht über Tokens kurz vor dem Listing.
+    *   "Fresh Wallets" Tracking: Anzeige von Käufen durch neue Wallets.
+    *   (Experimentell) Sniper Bot Detection: Hinweise auf Bot-Aktivität bei Launches.
+    *   (Zukunft) Social Media Signal Feed: Aggregierte, gefilterte Tweets/Casts (erfordert Social Media APIs).
+    *   (Zukunft) Integrierte Swap-Funktion: Direktes Trading via Jupiter API.
+    *   (Zukunft) Kollaborative Watchlists: Teilen von Listen und Notizen.
+
+---
+
+**Phase 2: Nach Migration zu $HUB_V2 (mit Smart Contracts)**
+
+*   Technologie: Benötigt Smart Contract Entwicklung (Rust), Audit, eigene Liquiditätsbereitstellung.
+*   Token: $HUB_V2 (mit On-Chain Utility)
+*   Features:
+    *   On-Chain Staking: $HUB_V2 staken für Rewards und/oder erweiterte App-Vorteile.
+    *   On-Chain Governance: Mit $HUB_V2 über App-Entwicklung/Treasury abstimmen.
+    *   Engere DeFi-Integrationen: Potenzielle Anbindung an andere Solana-Protokolle.
+    *   (Theoretisch) Dezentralisierung: Teile der App-Logik könnten potenziell auf Smart Contracts verlagert werden (z.B. Belohnungsverteilung).
+
+--- 
